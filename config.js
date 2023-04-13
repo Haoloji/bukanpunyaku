@@ -83,7 +83,7 @@ global.lynk = '~_~'
 
 //⫹⫺ ╳╶╼╶╶╶╶┈ ⎝ MEDIA SOSSIAL ⎞ ┈╴╴╴╴╾╴╳ ⫹⫺
 global.sig = '>_<'
-global.sgh = 'https://github.com/Haoloji' //github
+global.sgh = 'https://whatsapp.com/GPLdBQL9L293hSc9JrosJm' //github
 global.sgc = 'http://whatsapp.com/GPLdBQL9L293hSc9JrosJm' //group whatsapp
 global.sdc = '-' //discord
 global.snh = '≧∇≦'
