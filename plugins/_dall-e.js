@@ -1,19 +1,32 @@
-import { Configuration, OpenAIApi } from "openai";
-let handler = async (m, { conn, text, usedPrefix, command }) => {
+import { Configuration, OpenAIApi } from 'openai'
+const configuration = new Configuration({ organization: `${global.org}`, apiKey: `${global.openai}` }); //KEY-OPENAI-APIKEY-KAMU = https://platform.openai.com/account/api-keys , KEY-ORG-KAMU = https://platform.openai.com/account/org-settings
+const openai = new OpenAIApi(configuration);
+
+let handler = async (m, { conn, text, command }) => {
+    try {
+        if (!text) throw new Error(`Membuat gambar dari AI.\n\nContoh:\n.img Rumah kayu diatas gunung bersalju\n\n\n\nCreate image from AI\n\nExample:\n.img Wooden house on snow mountain`);
         
-            if (!text) throw (`Membuat gambar dari AI.\n\nContoh:\n${prefix}${command} Wooden house on snow mountain`);
-            const configuration = new Configuration({
-              apiKey: `${global.openai}`
-            });
-            const openai = new OpenAIApi(configuration);
-            const response = await openai.createImage({
-              prompt: text,
-              n: 1,
-              size: "512x512",
-            });
+        await m.reply(wait)
+        const response = await openai.createImage({
+            prompt: text,
+            n: 1,
+            size: "1024x1024",
+        });
         
-conn.send3TemplateButtonImg(m.chat, response.data.data[0].url, 'Ini Resultnya Kak', wm, 'SewaBot', '.sewa', 'Owner', '.owner', 'Menu', '.menu', m)
+        conn.sendButtonImg(m.chat, response.data.data[0].url, 'Done', wm, 'Menu', '.m', m)
+        
+    } catch (error) {
+        if (error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+            console.log(`${error.response.status}\n\n${error.response.data}`);
+        } else {
+            console.log(error);
+            m.reply(error.message);
+        }
+    }
 }
+
 
 handler.help = ['dalle <prompt>']
 handler.tags = ['ai']
